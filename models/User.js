@@ -1,10 +1,16 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes } from "sequelize";
 
-const User = (sequelize, DataTypes) => {
-  const UserModel = sequelize.define('User', {
+const User = (sequelize) => {
+  const UserModel = sequelize.define("User", {
+    id: { 
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false,  
     },
     email: {
       type: DataTypes.STRING,
