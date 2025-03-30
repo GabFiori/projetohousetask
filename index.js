@@ -48,7 +48,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/auth/login", (req, res) => {
-  res.render("login");
+  res.render("login", { message: null, messageType: null });
 });
 
 app.get("/auth/register", (req, res) => {
@@ -60,6 +60,6 @@ app.use("/tasks", taskRoutes);
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando em: http://localhost:${PORT}`);
+    console.log(`Servidor rodando em: http://localhost:${PORT}`);
   });
 });

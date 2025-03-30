@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suas Tarefas</title>
+  </head>
+  <body>
+    <h1>Suas Tarefas</h1>
+
+    <form action="/tasks" method="POST">
+      <input type="text" name="title" placeholder="Título da Tarefa" required />
+      <textarea name="description" placeholder="Descrição"></textarea>
+      <button type="submit">Criar Tarefa</button>
+    </form>
+
+    <ul>
+      <% tasks.forEach(task => { %>
+      <li>
+        <a href="/tasks/<%= task.id %>"><%= task.title %></a> - Criada em <%=
+        new Date(task.createdAt).toLocaleDateString() %>
+      </li>
+      <% }) %>
+    </ul>
+
+    <br />
+    <a href="#" id="logout">Sair</a>
+
+    <script>
+      document
+        .getElementById("logout")
+        .addEventListener("click", async (event) => {
+          event.preventDefault();
+
+          try {
+            const response = await fetch("/auth/logout", {
+              method: "POST",
+              credentials: "include",
+            });
+
+            if (response.ok) {
+              window.location.href = "/";
+            } else {
+              alert("Erro ao fazer logout");
+            }
+          } catch (error) {
+            console.error("Erro ao fazer logout:", error);
+          }
+        });
+    </script>
+  </body>
+</html>

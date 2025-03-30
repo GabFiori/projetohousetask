@@ -27,9 +27,4 @@ User.hasMany(Task, {
 });
 Task.belongsTo(User, { foreignKey: "UserId" });
 
-sequelize
-  .sync({ alter: true })
-  .then(() => console.log("Banco de dados sincronizado!"))
-  .catch((err) => console.error("Erro ao sincronizar o banco:", err));
-
 export { sequelize, User, Task };

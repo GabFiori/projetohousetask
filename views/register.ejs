@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Cadastrar-se</h1>
+    <% if (locals.message) { %>
+    <div
+      id="alert"
+      style="padding: 10px; border: 1px solid <%= messageType === 'success' ? 'green' : 'red' %>; color: white; background-color: <%= messageType === 'success' ? 'green' : 'red' %>;"
+    >
+      <%= message %>
+      <button onclick="fecharAlerta()">X</button>
+    </div>
+    <script>
+      function fecharAlerta() {
+        document.getElementById("alert").style.display = "none";
+        setTimeout(function () {
+          window.location.href = "/";
+        }, 500);
+      }
+    </script>
+    <% } %>
+
     <form action="/auth/register" method="POST">
-        <label for="username">Nome de usuário:</label>
-        <input type="text" name="username" id="username" required />
-        <br>
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" required />
-        <br>
-        <label for="password">Senha:</label>
-        <input type="password" name="password" id="password" required />
-        <br>
-        <button type="submit">Cadastrar</button>
+      <label for="username">Nome de usuário:</label>
+      <input type="text" name="username" id="username" required />
+      <br />
+      <label for="email">E-mail:</label>
+      <input type="email" name="email" id="email" required />
+      <br />
+      <label for="password">Senha:</label>
+      <input type="password" name="password" id="password" required />
+      <br />
+      <button type="submit">Cadastrar</button>
     </form>
-    <br>
+    <br />
     <a href="/">Voltar para a página inicial</a>
-</body>
+
+    <script>
+      function fecharAlerta() {
+        document.getElementById("alert").style.display = "none";
+        window.location.href = "/";
+      }
+    </script>
+  </body>
 </html>
