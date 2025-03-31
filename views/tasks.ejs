@@ -4,40 +4,78 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Suas Tarefas</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <h1>Suas Tarefas</h1>
+    <div class="container">
+      <h1>Suas Tarefas</h1>
+      <button id="openModal">Criar Tarefa</button>
 
-    <form action="/tasks" method="POST">
-      <input type="text" name="title" placeholder="Título da Tarefa" required />
-      <textarea name="description" placeholder="Descrição"></textarea>
-      <button type="submit">Criar Tarefa</button>
-    </form>
+      <div id="taskModal" class="modal">
+        <div class="modal-content">
+          <span id="closeModal" class="close">&times;</span>
+          <h2>Criar Nova Tarefa</h2>
+          <form action="/tasks" method="POST">
+            <input
+              type="text"
+              name="title"
+              placeholder="Título da Tarefa"
+              required
+            />
+            <textarea name="description" placeholder="Descrição"></textarea>
+            <button type="submit">Criar Tarefa</button>
+          </form>
+        </div>
+      </div>
 
-    <ul>
-      <% tasks.forEach(task => { %>
-      <li>
-        <a href="/tasks/<%= task.id %>"><%= task.title %></a> - Criada em <%=
-        new Date(task.createdAt).toLocaleDateString() %>
-      </li>
-      <% }) %>
-    </ul>
+      <ul class="task-list">
+        <% tasks.forEach(task => { %>
+        <li
+          class="task-item"
+          onclick="window.location.href='/tasks/<%= task.id %>'"
+        >
+          <span class="task-title"><%= task.title %></span>
+          <span class="task-date"
+            >Criada em <%= new Date(task.createdAt).toLocaleDateString()
+            %></span
+          >
+        </li>
+        <% }) %>
+      </ul>
 
-    <br />
-    <a href="#" id="logout">Sair</a>
+      <br />
+      <a href="#" id="logout">Sair</a>
+    </div>
 
     <script>
+      document
+        .getElementById("openModal")
+        .addEventListener("click", function () {
+          document.getElementById("taskModal").classList.add("show");
+        });
+
+      document
+        .getElementById("closeModal")
+        .addEventListener("click", function () {
+          document.getElementById("taskModal").classList.remove("show");
+        });
+
+      window.addEventListener("click", function (event) {
+        const modal = document.getElementById("taskModal");
+        if (event.target === modal) {
+          modal.classList.remove("show");
+        }
+      });
+
       document
         .getElementById("logout")
         .addEventListener("click", async (event) => {
           event.preventDefault();
-
           try {
             const response = await fetch("/auth/logout", {
               method: "POST",
               credentials: "include",
             });
-
             if (response.ok) {
               window.location.href = "/";
             } else {

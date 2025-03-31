@@ -4,24 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <h1>Login</h1>
+    <div class="auth-container">
+      <h1>Login</h1>
 
-    <% if (typeof message !== "undefined" && message) { %>
-    <p style="color: red"><%= message %></p>
-    <% } %>
+      <% if (typeof message !== "undefined" && message) { %>
+      <div id="alert" class="<%= messageType === 'success' ? 'success' : 'error' %>">
+        <%= message %>
+        <button onclick="fecharAlerta()">X</button>
+      </div>
+      <% } %>
 
-    <form action="/auth/login" method="POST">
-      <label for="email">E-mail:</label>
-      <input type="email" name="email" id="email" required />
+      <form action="/auth/login" method="POST">
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" id="email" required />
+        <br />
+        <label for="password">Senha:</label>
+        <input type="password" name="password" id="password" required />
+        <br />
+        <button type="submit">Entrar</button>
+      </form>
+
       <br />
-      <label for="password">Senha:</label>
-      <input type="password" name="password" id="password" required />
-      <br />
-      <button type="submit">Entrar</button>
-    </form>
-    <br />
-    <a href="/">Voltar para a página inicial</a>
+      <a href="/">Voltar para a página inicial</a>
+    </div>
+
+    <script>
+      function fecharAlerta() {
+        document.getElementById("alert").style.display = "none";
+        setTimeout(function () {
+          window.location.href = "/";
+        }, 500);
+      }
+    </script>
   </body>
 </html>
